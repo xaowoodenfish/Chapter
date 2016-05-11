@@ -1,0 +1,42 @@
+#在一定棋盘大小m*n中，给定初始点坐标(x,y)
+#象棋中，马走日，每次的走法有八种，找到一种方法
+#从初始点开始
+#每个棋格都要走过，但不重复走多次！！
+#回溯法find来找
+def find(x,y,dep):
+	for i in range(8):
+		xx = x+fx[i]
+		yy = y+fy[i]
+		if(check(xx,yy)==1):
+			a[xx][yy]=dep		
+			if (dep==m*n):
+				output()
+			else:
+				find(xx,yy,dep+1)
+			a[xx][yy] = 0
+#输出找到的数组，其值表示走的步数
+def output():
+	count +=1
+	for i in range(m):
+		for j in range(n):
+			print(a[i][j])
+#判断这步是否在棋盘内，且没有走过
+def check(xx,yy):
+	if (xx>=0 and xx<n-1 and yy >=0 and yy<m-1 and a[xx][yy]!=0):
+		return 1
+	else:
+		return 0
+m =  int(raw_input("please input the row:"))
+n =  int(raw_input("please input the line:"))
+#初始化棋盘，0表示没有走过
+a = [[0 for i in range(n)]for j in range(m)]
+x =  int(raw_input("the start of x:"))
+y =  int(raw_input("the start of y:"))
+#表示每次走的八种可能
+fx = [1,2,1,2,-1,-2,-1,-2]
+fy = [2,1,-2,-1,-2,-1,2,1]
+count = 0
+dep = 1
+find(x,y,2)
+if (count==0):
+	print("There is no result!")
